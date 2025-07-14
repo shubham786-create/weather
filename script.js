@@ -90,10 +90,9 @@ const url1=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=5365
 				let dateTime=data[i].dt_txt;
 				let timeOnly=dateTime.split(" ");
 				let hourOnly=timeOnly[1].split(":");
-				if(hourOnly[0]=="00"){
-				   hourOnly[0]="12";
-				}
-				   time[j].innerText=hourOnly[0]+":"+ hourOnly[1];
+				let suffix=hourOnly[0]>12 ? "PM" :"AM" ;
+				let intHour=hourOnly[0] % 12 || 12;
+				   time[j].innerText=`${intHour}: ${hourOnly[1]}${suffix}`;
 				}
 				if((data[i].weather[0]).main == "Clouds"){
 		akash[j].innerText=(data[i].weather[0]).description+"🌧️";
