@@ -52,7 +52,7 @@ const weatherInfo=async(city)=>{
 const url1=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=53653fdf49a8ba51dee00ea94a8c3ab2&units=metric`;
 	let data = await fetch(url1);
 	try{
-	let info=await data.json();
+	let info=await data.json()
 	if(metricMode=="celcius"){
 	temperature.innerText=info.main.temp;
 	}else{
