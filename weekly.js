@@ -1,5 +1,13 @@
+let body=document.querySelector("body");
+let heading=document.querySelector("h1");
+let boxes=document.querySelectorAll(".box");
 let input=document.querySelector("input");
 let btn=document.querySelector("button");
+let hamburger=document.querySelector("#hamburger");
+let sun=document.querySelector("#sun");
+let metric=document.querySelector("#metric");
+let content=document.querySelector("#content");
+let changeMode=document.querySelector("#modeBtn");
 let searchArea=document.querySelectorAll(".location");
 let currentDate=document.querySelectorAll(".date");
 let temperature=document.querySelectorAll(".temp");
@@ -7,6 +15,8 @@ let precip=document.querySelectorAll(".prec");
 let condition=document.querySelectorAll(".condition");
 let humidity=document.querySelectorAll(".humidity");
 let windSpeed=document.querySelectorAll(".wind");
+let mode="dark";
+let metricMode="celsius";
 let city;
 
 
@@ -25,7 +35,7 @@ function capitalize(location){
 
 btn.addEventListener("click",(evt)=>{
   evt.preventDefault();
-  if(city==undefined){
+  if(city==undefined || input.value==''){
     alert("Search any location");
   }else{
     coord(city);
@@ -33,11 +43,74 @@ btn.addEventListener("click",(evt)=>{
   }
 });
 
+hamburger.addEventListener("click", ()=>{
+    content.classList.toggle("hidden");
+});
 
+changeMode.addEventListener("click", ()=>{
+	if(mode=="dark"){
+		Mode();
+		sun.classList.add("translate-x-10");
+		sun.classList.remove("translate-x-0");
+		sun.innerText="☀️";
+	}else{
+		Mode();
+	    sun.classList.add("translate-x-0");
+		sun.classList.remove("translate-x-10");
+		sun.innerText="🌙";
+	}
+});
+function Mode(){
+	if(mode=="light"){
+		body.style.backgroundColor="rgb(14, 6, 51)";
+		body.style.color="white";
+		heading.style.backgroundColor="rgb(93, 17, 114)";
+      
+		for(let ele of boxes ){
+         ele.style.backgroundColor="rgb(93, 17, 114)";
+		}
+	
+		mode="dark";
+	}else{
+		body.style.backgroundColor="rgb(129, 186, 243)";
+		body.style.color="black";
+		heading.style.backgroundColor="rgb(160, 87, 228)";
+		for(let ele of boxes ){
+         ele.style.backgroundColor="rgb(160, 87, 228)";
+		}
+	
+		mode="light";
+	}
+}
+ 
+input.addEventListener("focus", () => {
+  if (mode === "dark") {
+    input.style.backgroundColor = "rgb(93, 17, 114)";
+  } else {
+    input.style.backgroundColor = "rgb(160, 87, 228)";
+  }
+});
 
+input.addEventListener("blur", () => {
+  input.style.backgroundColor = ""; 
+});
 
-
-
+metric.addEventListener("click",()=>{
+  
+  for(let i=0; i<7; i++){
+    if(metricMode=="celsius"){
+      metric.classList.add("translate-x-5");
+		 metric.classList.remove("translate-x-0");
+      coord(city);
+      metricMode="farenheit";
+    }else{
+      metric.classList.add("translate-x-0");
+		metric.classList.remove("translate-x-5");
+      coord(city);
+      metricMode="celsius";
+    }
+  }
+})
 
 
 const weather=async(location2)=>{
@@ -59,7 +132,13 @@ humidity[i].innerText=(((data2.timelines).daily[i]).values).humidityAvg + "%";
 let tempMax=(((data2.timelines).daily[i]).values).temperatureMax;
 
 let tempMin=(((data2.timelines).daily[i]).values).temperatureMin;
+if(metricMode=="celsius"){
 temperature[i].innerText=`${tempMin}℃ /${tempMax}℃`;
+}else{
+  tempMax=(((tempMax) * 9/5)+32).toFixed(2);
+   tempMin=(((tempMin) * 9/5)+32).toFixed(2);
+  temperature[i].innerText=`${tempMin}℉/${tempMax}℉`;
+}
 
 let weatherCode=(((data2.timelines).daily[i]).values).weatherCodeMax;
 if(weatherCode===1000){
@@ -96,11 +175,9 @@ searchArea[index].innerText=data2.name + "📍";
  let coordinates=`${latitude,longitude}`;
  weather(coordinates);
 }
+	
+  if(city==undefined){
+	 coord("Delhi");
+  }
 
-
-// let data= new Date();
-// console.log(data);
-// const dayName = data.toLocaleDateString("en-US", { weekday: "long" });
-
-// console.log(dayName);
 
