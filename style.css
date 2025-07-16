@@ -242,6 +242,9 @@
   .mt-10 {
     margin-top: calc(var(--spacing) * 10);
   }
+  .mt-15 {
+    margin-top: calc(var(--spacing) * 15);
+  }
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
   }
