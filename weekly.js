@@ -97,20 +97,28 @@ input.addEventListener("blur", () => {
 
 metric.addEventListener("click",()=>{
   
-  for(let i=0; i<7; i++){
+
     if(metricMode=="celsius"){
       metric.classList.add("translate-x-5");
 		 metric.classList.remove("translate-x-0");
+     if(city===undefined){
+      coord("Delhi");
+     }else{
       coord(city);
+     }
       metricMode="farenheit";
     }else{
       metric.classList.add("translate-x-0");
 		metric.classList.remove("translate-x-5");
+          if(city===undefined){
+      coord("Delhi");
+     }else{
       coord(city);
+     }
       metricMode="celsius";
     }
   }
-})
+)
 
 
 const weather=async(location2)=>{
@@ -118,8 +126,10 @@ const url = `https://api.tomorrow.io/v4/weather/forecast?location=${location2}&a
  let data1=await fetch(url);
 
  let data2=await data1.json();
+console.log(data2);
 for(let i=0; i<7; i++){
 let dayString=((data2.timelines).daily[i]).time;
+console.log(((data2.timelines).daily[i]).time);
 let day=new Date(dayString);
 let dateData=day.getDate();
 let month=day.getMonth() + 1;
@@ -128,7 +138,7 @@ let year=day.getFullYear();
  currentDate[i].innerText=`${dayName}, ${dateData}-${month}-${year}`;
 
 humidity[i].innerText=(((data2.timelines).daily[i]).values).humidityAvg + "%";
-
+console.log(humidity[i])
 let tempMax=(((data2.timelines).daily[i]).values).temperatureMax;
 
 let tempMin=(((data2.timelines).daily[i]).values).temperatureMin;
@@ -165,6 +175,7 @@ const url=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=53653
  let data1=await fetch(url);
 
  let data2=await data1.json();
+console.log(data2);
 searchArea.forEach((element , index)=>{
 searchArea[index].innerText=data2.name + "📍";
 });
