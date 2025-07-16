@@ -173,7 +173,7 @@ precip[i].innerText=(((data2.timelines).daily[i]).values).precipitationProbabili
 const coord=async(city)=>{
 const url=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=53653fdf49a8ba51dee00ea94a8c3ab2&units=metric`;
  let data1=await fetch(url);
-
+try{
  let data2=await data1.json();
 console.log(data2);
 searchArea.forEach((element , index)=>{
@@ -185,6 +185,10 @@ searchArea[index].innerText=data2.name + "📍";
  let longitude=(data2.coord).lon;
  let coordinates=`${latitude,longitude}`;
  weather(coordinates);
+}catch{
+  alert(`Error😔:
+    could not fetch the weather data for that city.Please check the name !`);
+}
 }
 	
   if(city==undefined){

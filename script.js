@@ -73,7 +73,7 @@ const url1=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=5365
     visibility.innerText= info.visibility + "m";
 }catch{
 	alert(`Error 😔:
-		could fetch the weather data for that city.Please check the name !`);
+		could not fetch the weather data for that city.Please check the name !`);
 }
 }
 
