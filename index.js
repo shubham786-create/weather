@@ -76,11 +76,11 @@ color4.addEventListener("animationend",()=>{
                          if(index==colors.length-1){
                     let image=document.createElement("img");
                     image.src="https://cdn-icons-png.freepik.com/512/9176/9176621.png";
-                    image.style.width="5rem";
+                    image.style.width="3.5rem";
                     let text=document.createElement("p");
                     text.innerText="WeatherMe☀️";
                     text.style.color="white";
-                    text.style.fontSize="2.5rem";
+                    text.style.fontSize="2rem";
                     image.classList.add("image");
                     text.classList.add("text");
                     container.append(image);
